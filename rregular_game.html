@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verb Master Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fce4ec; /* Sea Foam Pink Background */
+            margin: 0;
+            text-align: center;
+        }
+        #game-container {
+            background-color: #fce4ec; /* Match body background */
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 650px; /* Slightly wider for new layout */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        /* Style for the INFINITIVE verb */
+        #infinitive-verb-display { 
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e91e63; /* Pink for Base Form */
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 2px solid #e91e63; 
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+        /* Style for the Past Tense forms */
+        .past-tense-reveal {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #4caf50; /* Sea Foam Green for answers */
+            cursor: pointer;
+            padding: 5px 10px;
+            display: inline-block;
+            margin-top: 15px;
+            border-bottom: 3px dashed #4caf50;
+            user-select: none;
+        }
+        #translation {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        #question-text {
+            font-size: 1.1em;
+            color: #777;
+            margin-bottom: 25px;
+        }
+        
+        .button-group button,
+        #reveal-simple-past-button,
+        #reveal-past-participle-button,
+        #start-game-button,
+        #round-summary-view button {
+            background-color: #4caf50; /* Sea Foam Green Button Color */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 5px;
+            border-radius: 5px; 
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .button-group button:hover,
+        #reveal-simple-past-button:hover,
+        #reveal-past-participle-button:hover,
+        #start-game-button:hover,
+        #round-summary-view button:hover {
+            background-color: #388e3c;
+        }
+        /* Make specific buttons larger */
+        #start-game-button {
+            padding: 15px 40px !important;
+            font-size: 1.2em !important;
+            font-weight: bold;
+            min-width: 250px;
+        }
+        #reveal-simple-past-button, #reveal-past-participle-button {
+            padding: 10px 30px;
+            font-size: 1.1em;
+            min-width: 220px;
+            margin-top: 15px;
+        }
+        
+        .score-box {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        #round-summary {
+            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            background-color: #f8bbd0; 
+            border-radius: 8px;
+        }
+        .summary-item {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .hidden {
+            display: none;
+        }
+        /* Style for Instructions screen */
+        #instructions-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #instructions-view ul {
+            list-style: none;
+            padding-left: 0;
+            max-width: 500px; 
+            margin: 0 auto 20px auto; 
+            text-align: left;
+        }
+        #instructions-view li {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .instruction-section {
+            margin-bottom: 25px; 
+            text-align: center;
+        }
+        .instruction-title {
+            font-weight: bold;
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="instructions-view">
+        <h2 style="color: #e91e63;">Irregular Verb Master Game</h2>
+        
+        <div class="instruction-section">
+            <div class="instruction-title">English Instructions:</div>
+            <p>This game tests your knowledge of **three forms** of irregular verbs: Infinitive, Simple Past, and Past Participle.</p>
+            <p style="font-weight: bold;">10 rounds of 10 words each.</p>
+            <ul>
+                <li>Step 1: Click the verb (**Infinitive**) to hear it.</li>
+                <li>Step 2: Think of the **Simple Past** form.</li>
+                <li>Step 3: Click "Simple Past" to reveal and listen.</li>
+                <li>Step 4: Think of the **Past Participle** form.</li>
+                <li>Step 5: Click "Past Participle" to reveal and listen.</li>
+                <li>Step 6: Answer Yes, No, or Not Sure for the *final form* to score points.</li>
+                <li>End of Round: See your score and sample sentences for all 10 words.</li>
+            </ul>
+        </div>
+
+        <div class="instruction-section">
+            <div class="instruction-title">日本語での遊び方:</div>
+            <p>このゲームは、不規則動詞の三つの形（原形、過去形、過去分詞）の知識を試します。</p>
+            <p style="font-weight: bold;">1ラウンド10単語、全10ラウンドです。</p>
+            <ul>
+                <li>ステップ1: 動詞（原形）をクリックして発音を聞きます。</li>
+                <li>ステップ2: 過去形を考えます。</li>
+                <li>ステップ3: 「Simple Past」をクリックして答えを確認します。</li>
+                <li>ステップ4: 過去分詞を考えます。</li>
+                <li>ステップ5: 「Past Participle」をクリックして答えを確認します。</li>
+                <li>ステップ6: 「Yes, No, Not Sure」で回答し、スコアを獲得します。</li>
+                <li>ラウンド終了: スコアと10単語全ての例文を確認します。</li>
+            </ul>
+        </div>
+        
+        <button id="start-game-button" onclick="startGame()">Start Game</button>
+    </div>
+
+    <div id="current-word-view" class="hidden">
+        <h2 id="round-header">Round 1: Word 1 / 10</h2>
+        
+        <div id="translation">[Japanese Definition]</div>
+        <div id="infinitive-verb-display" onclick="speakText(currentWord.infinitive)">INFINITIVE VERB</div>
+        <div id="question-text">Click the verb to hear it. **What is its Simple Past form?**</div>
+        
+        <button id="reveal-simple-past-button" onclick="revealSimplePast()">Simple Past</button>
+        
+        <div id="simple-past-container" class="hidden">
+            <div id="simple-past-display" class="past-tense-reveal" onclick="speakText(currentWord.simple_past)"></div>
+            <p style="margin-top: 20px; color: #333;">**Next: What is the Past Participle form?**</p>
+            
+            <button id="reveal-past-participle-button" onclick="revealPastParticiple()">Past Participle</button>
+
+            <div id="past-participle-container" class="hidden">
+                <div id="past-participle-display" class="past-tense-reveal" onclick="speakText(currentWord.past_participle)"></div>
+                <p style="margin-top: 20px; color: #333;">Is this what you thought?</p>
+                <div id="feedback-buttons" class="button-group">
+                    <button onclick="submitFeedback(1)">Yes <span id="reward-visual"></span></button>
+                    <button onclick="submitFeedback(0.5)">Not Sure</button>
+                    <button onclick="submitFeedback(0)">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="round-summary-view" class="hidden">
+        <h3>Round <span id="summary-round-number"></span> Complete!</h3>
+        <div class="score-box">
+            Round Score: <span id="round-score-display">0</span> <span style="font-size: 1.5em;">🪙</span>
+        </div>
+        <h4>Summary of Verb Forms:</h4>
+        <div id="round-summary"></div>
+        <button onclick="startNextRound()">Start Next Round</button>
+    </div>
+
+    <div class="score-box">
+        Total Score: <span id="total-score-display">0</span> <span style="font-size: 1.5em;">🥇</span>
+    </div>
+</div>
+
+<script>
+// =======================================================================
+// PART 1: GAME DATA (100 Common Irregular Verbs)
+// =======================================================================
+
+const IRREGULAR_GAME_DATA = [
+    {
+        "round_number": 1,
+        "words": [
+            { "infinitive": "BE", "simple_past": "was were", "past_participle": "been", "japanese_def": "[〜である]", "sample_sentence": "She has been waiting for an hour." },
+            { "infinitive": "GO", "simple_past": "went", "past_participle": "gone", "japanese_def": "[行く]", "sample_sentence": "They have gone to the new restaurant." },
+            { "infinitive": "DO", "simple_past": "did", "past_participle": "done", "japanese_def": "[する]", "sample_sentence": "I have done my best on this project." },
+            { "infinitive": "GET", "simple_past": "got", "past_participle": "gotten", "japanese_def": "[得る]", "sample_sentence": "He has gotten much better at guitar." },
+            { "infinitive": "SAY", "simple_past": "said", "past_participle": "said", "japanese_def": "[言う]", "sample_sentence": "She has said that many times before." },
+            { "infinitive": "MAKE", "simple_past": "made", "past_participle": "made", "japanese_def": "[作る]", "sample_sentence": "They have made a big improvement." },
+            { "infinitive": "TAKE", "simple_past": "took", "past_participle": "taken", "japanese_def": "[取る]", "sample_sentence": "The plane has taken off already." },
+            { "infinitive": "SEE", "simple_past": "saw", "past_participle": "seen", "japanese_def": "[見る]", "sample_sentence": "We have seen that movie three times." },
+            { "infinitive": "COME", "simple_past": "came", "past_participle": "come", "japanese_def": "[来る]", "sample_sentence": "The time has come to say goodbye." },
+            { "infinitive": "KNOW", "simple_past": "knew", "past_participle": "known", "japanese_def": "[知っている]", "sample_sentence": "I have known him since elementary school." }
+        ]
+    },
+    {
+        "round_number": 2,
+        "words": [
+            { "infinitive": "GIVE", "simple_past": "gave", "past_participle": "given", "japanese_def": "[与える]", "sample_sentence": "She has given a clear explanation." },
+            { "infinitive": "FIND", "simple_past": "found", "past_participle": "found", "japanese_def": "[見つける]", "sample_sentence": "We have found the missing key." },
+            { "infinitive": "THINK", "simple_past": "thought", "past_participle": "thought", "japanese_def": "[考える]", "sample_sentence": "I had thought it would be easier." },
+            { "infinitive": "TELL", "simple_past": "told", "past_participle": "told", "japanese_def": "[話す]", "sample_sentence": "He has told the whole story now." },
+            { "infinitive": "PUT", "simple_past": "put", "past_participle": "put", "japanese_def": "[置く]", "sample_sentence": "She has put the books on the shelf." },
+            { "infinitive": "MEAN", "simple_past": "meant", "past_participle": "meant", "japanese_def": "[意味する]", "sample_sentence": "I hadn't meant to cause any trouble." },
+            { "infinitive": "KEEP", "simple_past": "kept", "past_participle": "kept", "japanese_def": "[保つ]", "sample_sentence": "We have kept this secret for years." },
+            { "infinitive": "LET", "simple_past": "let", "past_participle": "let", "japanese_def": "[許す]", "sample_sentence": "My parents have always let me travel." },
+            { "infinitive": "BEGIN", "simple_past": "began", "past_participle": "begun", "japanese_def": "[始める]", "sample_sentence": "The concert has begun, please take your seats." },
+            { "infinitive": "SHOW", "simple_past": "showed", "past_participle": "shown", "japanese_def": "[見せる]", "sample_sentence": "They have shown great courage." }
+        ]
+    },
+    {
+        "round_number": 3,
+        "words": [
+            { "infinitive": "HEAR", "simple_past": "heard", "past_participle": "heard", "japanese_def": "[聞く]", "sample_sentence": "I have heard that rumor before." },
+            { "infinitive": "RUN", "simple_past": "ran", "past_participle": "run", "japanese_def": "[走る]", "sample_sentence": "He has run the marathon twice." },
+            { "infinitive": "HOLD", "simple_past": "held", "past_participle": "held", "japanese_def": "[持つ]", "sample_sentence": "She has held the record since 2010." },
+            { "infinitive": "BRING", "simple_past": "brought", "past_participle": "brought", "japanese_def": "[持ってくる]", "sample_sentence": "We have brought enough food for everyone." },
+            { "infinitive": "WRITE", "simple_past": "wrote", "past_participle": "written", "japanese_def": "[書く]", "sample_sentence": "The book was written in 1899." },
+            { "infinitive": "SIT", "simple_past": "sat", "past_participle": "sat", "japanese_def": "[座る]", "sample_sentence": "I have sat here for half an hour." },
+            { "infinitive": "STAND", "simple_past": "stood", "past_participle": "stood", "japanese_def": "[立つ]", "sample_sentence": "He has stood by his decision." },
+            { "infinitive": "LOSE", "simple_past": "lost", "past_participle": "lost", "japanese_def": "[失う]", "sample_sentence": "They have lost the championship game." },
+            { "infinitive": "PAY", "simple_past": "paid", "past_participle": "paid", "japanese_def": "[支払う]", "sample_sentence": "We have paid all our debts." },
+            { "infinitive": "MEET", "simple_past": "met", "past_participle": "met", "japanese_def": "[会う]", "sample_sentence": "I haven't met your new boss yet." }
+        ]
+    },
+    {
+        "round_number": 4,
+        "words": [
+            { "infinitive": "SET", "simple_past": "set", "past_participle": "set", "japanese_def": "[置く/設定する]", "sample_sentence": "The alarm has been set for 6 AM." },
+            { "infinitive": "LEAD", "simple_past": "led", "past_participle": "led", "japanese_def": "[導く]", "sample_sentence": "She has led the team for three years." },
+            { "infinitive": "UNDERSTAND", "simple_past": "understood", "past_participle": "understood", "japanese_def": "[理解する]", "sample_sentence": "I hadn't understood the gravity of the situation." },
+            { "infinitive": "SPEAK", "simple_past": "spoke", "past_participle": "spoken", "japanese_def": "[話す]", "sample_sentence": "They have spoken to the manager." },
+            { "infinitive": "READ", "simple_past": "read", "past_participle": "read", "japanese_def": "[読む]", "sample_sentence": "She has read that book many times." },
+            { "infinitive": "SPEND", "simple_past": "spent", "past_participle": "spent", "japanese_def": "[費やす]", "sample_sentence": "We have spent all our savings." },
+            { "infinitive": "GROW", "simple_past": "grew", "past_participle": "grown", "japanese_def": "[育つ]", "sample_sentence": "The children have grown so tall." },
+            { "infinitive": "WIN", "simple_past": "won", "past_participle": "won", "japanese_def": "[勝つ]", "sample_sentence": "Our team has won every game this season." },
+            { "infinitive": "BUY", "simple_past": "bought", "past_participle": "bought", "japanese_def": "[買う]", "sample_sentence": "I have bought a new phone." },
+            { "infinitive": "SEND", "simple_past": "sent", "past_participle": "sent", "japanese_def": "[送る]", "sample_sentence": "The package has been sent." }
+        ]
+    },
+    {
+        "round_number": 5,
+        "words": [
+            { "infinitive": "BUILD", "simple_past": "built", "past_participle": "built", "japanese_def": "[建てる]", "sample_sentence": "They have built a strong company." },
+            { "infinitive": "FALL", "simple_past": "fell", "past_participle": "fallen", "japanese_def": "[落ちる]", "sample_sentence": "The leaves have fallen from the trees." },
+            { "infinitive": "CUT", "simple_past": "cut", "past_participle": "cut", "japanese_def": "[切る]", "sample_sentence": "She has cut her hair short." },
+            { "infinitive": "EAT", "simple_past": "ate", "past_participle": "eaten", "japanese_def": "[食べる]", "sample_sentence": "We have eaten all the pizza." },
+            { "infinitive": "DRINK", "simple_past": "drank", "past_participle": "drunk", "japanese_def": "[飲む]", "sample_sentence": "He has drunk three glasses of water." },
+            { "infinitive": "FORGET", "simple_past": "forgot", "past_participle": "forgotten", "japanese_def": "[忘れる]", "sample_sentence": "I had forgotten my wallet at home." },
+            { "infinitive": "TEACH", "simple_past": "taught", "past_participle": "taught", "japanese_def": "[教える]", "sample_sentence": "She has taught for over twenty years." },
+            { "infinitive": "CATCH", "simple_past": "caught", "past_participle": "caught", "japanese_def": "[捕まえる]", "sample_sentence": "He has caught every ball thrown to him." },
+            { "infinitive": "SLEEP", "simple_past": "slept", "past_participle": "slept", "japanese_def": "[眠る]", "sample_sentence": "I have slept well since moving here." },
+            { "infinitive": "DRIVE", "simple_past": "drove", "past_participle": "driven", "japanese_def": "[運転する]", "sample_sentence": "She has driven across the entire country." }
+        ]
+    },
+    {
+        "round_number": 6,
+        "words": [
+            { "infinitive": "HAVE", "simple_past": "had", "past_participle": "had", "japanese_def": "[持つ]", "sample_sentence": "They have had a great vacation." },
+            { "infinitive": "WIN", "simple_past": "won", "past_participle": "won", "japanese_def": "[勝つ]", "sample_sentence": "Our team has won the league." },
+            { "infinitive": "LEAVE", "simple_past": "left", "past_participle": "left", "japanese_def": "[去る]", "sample_sentence": "He has left the office already." },
+            { "infinitive": "STAND", "simple_past": "stood", "past_participle": "stood", "japanese_def": "[立つ]", "sample_sentence": "We have stood for hours at the concert." },
+            { "infinitive": "FEEL", "simple_past": "felt", "past_participle": "felt", "japanese_def": "[感じる]", "sample_sentence": "I haven't felt this happy in years." },
+            { "infinitive": "BREAK", "simple_past": "broke", "past_participle": "broken", "japanese_def": "[壊す]", "sample_sentence": "The glass has been broken." },
+            { "infinitive": "WEAR", "simple_past": "wore", "past_participle": "worn", "japanese_def": "[着る]", "sample_sentence": "She has worn that dress once before." },
+            { "infinitive": "CHOOSE", "simple_past": "chose", "past_participle": "chosen", "japanese_def": "[選ぶ]", "sample_sentence": "They have chosen a new leader." },
+            { "infinitive": "THROW", "simple_past": "threw", "past_participle": "thrown", "japanese_def": "[投げる]", "sample_sentence": "The ball was thrown out of bounds." },
+            { "infinitive": "BITE", "simple_past": "bit", "past_participle": "bitten", "japanese_def": "[噛む]", "sample_sentence": "I have been bitten by a mosquito." }
+        ]
+    },
+    {
+        "round_number": 7,
+        "words": [
+            { "infinitive": "RING", "simple_past": "rang", "past_participle": "rung", "japanese_def": "[鳴る]", "sample_sentence": "The phone has rung ten times today." },
+            { "infinitive": "SING", "simple_past": "sang", "past_participle": "sung", "japanese_def": "[歌う]", "sample_sentence": "She has sung that song beautifully." },
+            { "infinitive": "SWIM", "simple_past": "swam", "past_participle": "swum", "japanese_def": "[泳ぐ]", "sample_sentence": "We have swum in this lake many times." },
+            { "infinitive": "FIGHT", "simple_past": "fought", "past_participle": "fought", "japanese_def": "[戦う]", "sample_sentence": "They have fought for their rights." },
+            { "infinitive": "STEAL", "simple_past": "stole", "past_participle": "stolen", "japanese_def": "[盗む]", "sample_sentence": "My bike has been stolen." },
+            { "infinitive": "SHAKE", "simple_past": "shook", "past_participle": "shaken", "japanese_def": "[振る]", "sample_sentence": "The earthquake has shaken the building." },
+            { "infinitive": "FLY", "simple_past": "flew", "past_participle": "flown", "japanese_def": "[飛ぶ]", "sample_sentence": "He has flown a plane solo." },
+            { "infinitive": "HIDE", "simple_past": "hid", "past_participle": "hidden", "japanese_def": "[隠す]", "sample_sentence": "The treasure has been hidden for centuries." },
+            { "infinitive": "WAKE", "simple_past": "woke", "past_participle": "woken", "japanese_def": "[目覚める]", "sample_sentence": "I have been woken up by the noise." },
+            { "infinitive": "FREEZE", "simple_past": "froze", "past_participle": "frozen", "japanese_def": "[凍る]", "sample_sentence": "The water pipes have frozen solid." }
+        ]
+    },
+    {
+        "round_number": 8,
+        "words": [
+            { "infinitive": "DRAW", "simple_past": "drew", "past_participle": "drawn", "japanese_def": "[描く]", "sample_sentence": "She has drawn a beautiful picture." },
+            { "infinitive": "SHINE", "simple_past": "shone", "past_participle": "shone", "japanese_def": "[輝く]", "sample_sentence": "The sun has shone all day." },
+            { "infinitive": "DEAL", "simple_past": "dealt", "past_participle": "dealt", "japanese_def": "[対処する]", "sample_sentence": "They have dealt with that issue before." },
+            { "infinitive": "SWEEP", "simple_past": "swept", "past_participle": "swept", "japanese_def": "[掃く]", "sample_sentence": "The floor has been swept clean." },
+            { "infinitive": "TEAR", "simple_past": "tore", "past_participle": "torn", "japanese_def": "[破る]", "sample_sentence": "The paper has been torn in half." },
+            { "infinitive": "LEND", "simple_past": "lent", "past_participle": "lent", "japanese_def": "[貸す]", "sample_sentence": "I have lent him money many times." },
+            { "infinitive": "HURT", "simple_past": "hurt", "past_participle": "hurt", "japanese_def": "[傷つける]", "sample_sentence": "He has hurt his knee playing soccer." },
+            { "infinitive": "STICK", "simple_past": "stuck", "past_participle": "stuck", "japanese_def": "[固執する/くっつく]", "sample_sentence": "The key has stuck in the lock." },
+            { "infinitive": "DIG", "simple_past": "dug", "past_participle": "dug", "japanese_def": "[掘る]", "sample_sentence": "They have dug a hole for the tree." },
+            { "infinitive": "SELL", "simple_past": "sold", "past_participle": "sold", "japanese_def": "[売る]", "sample_sentence": "The house was sold last month." }
+        ]
+    },
+    {
+        "round_number": 9,
+        "words": [
+            { "infinitive": "FORBID", "simple_past": "forbade", "past_participle": "forbidden", "japanese_def": "[禁じる]", "sample_sentence": "Smoking is strictly forbidden here." },
+            { "infinitive": "FORGIVE", "simple_past": "forgave", "past_participle": "forgiven", "japanese_def": "[許す]", "sample_sentence": "She has been forgiven for her error." },
+            { "infinitive": "PROVE", "simple_past": "proved", "past_participle": "proven", "japanese_def": "[証明する]", "sample_sentence": "The theory has been proven correct." },
+            { "infinitive": "RISE", "simple_past": "rose", "past_participle": "risen", "japanese_def": "[上がる]", "sample_sentence": "The sun has already risen." },
+            { "infinitive": "SHUT", "simple_past": "shut", "past_participle": "shut", "japanese_def": "[閉める]", "sample_sentence": "The shop is shut for the day." },
+            { "infinitive": "SINK", "simple_past": "sank", "past_participle": "sunk", "japanese_def": "[沈む]", "sample_sentence": "The ship has sunk to the ocean floor." },
+            { "infinitive": "SMELL", "simple_past": "smelled", "past_participle": "smelled", "japanese_def": "[匂いをかぐ]", "sample_sentence": "It smelled strongly of garlic." },
+            { "infinitive": "STRIKE", "simple_past": "struck", "past_participle": "struck", "japanese_def": "[打つ/襲う]", "sample_sentence": "Lightning has struck the same place twice." },
+            { "infinitive": "WEEP", "simple_past": "wept", "past_participle": "wept", "japanese_def": "[泣く]", "sample_sentence": "She has wept tears of joy." },
+            { "infinitive": "WITHDRAW", "simple_past": "withdrew", "past_participle": "withdrawn", "japanese_def": "[引き出す]", "sample_sentence": "He has withdrawn all his money." }
+        ]
+    },
+    {
+        "round_number": 10,
+        "words": [
+            { "infinitive": "BEND", "simple_past": "bent", "past_participle": "bent", "japanese_def": "[曲げる]", "sample_sentence": "The pole has been bent by the wind." },
+            { "infinitive": "BLEED", "simple_past": "bled", "past_participle": "bled", "japanese_def": "[出血する]", "sample_sentence": "The wound has stopped bleeding." },
+            { "infinitive": "BREED", "simple_past": "bred", "past_participle": "bred", "japanese_def": "[繁殖させる]", "sample_sentence": "These dogs have been bred for speed." },
+            { "infinitive": "CLING", "simple_past": "clung", "past_participle": "clung", "japanese_def": "[しがみつく]", "sample_sentence": "The child clung to her mother." },
+            { "infinitive": "DEAL", "simple_past": "dealt", "past_participle": "dealt", "japanese_def": "[扱う]", "sample_sentence": "They have dealt with the issue effectively." },
+            { "infinitive": "DREAM", "simple_past": "dreamed", "past_participle": "dreamed", "japanese_def": "[夢を見る]", "sample_sentence": "I have dreamed of this moment." },
+            { "infinitive": "FEED", "simple_past": "fed", "past_participle": "fed", "japanese_def": "[食べ物を与える]", "sample_sentence": "The birds have been fed." },
+            { "infinitive": "GRIND", "simple_past": "ground", "past_participle": "ground", "japanese_def": "[挽く]", "sample_sentence": "The coffee beans have been freshly ground." },
+            { "infinitive": "HANG", "simple_past": "hung", "past_participle": "hung", "japanese_def": "[吊るす]", "sample_sentence": "The picture has been hung too high." },
+            { "infinitive": "SLIDE", "simple_past": "slid", "past_participle": "slid", "japanese_def": "[滑る]", "sample_sentence": "The cover slid open easily." }
+        ]
+    }
+];
+
+
+// =======================================================================
+// PART 2: GAME LOGIC (The "Engine")
+// =======================================================================
+
+// *** IMPORTANT: Change the data source here ***
+const GAME_DATA = IRREGULAR_GAME_DATA; 
+
+let currentRoundIndex = 0;
+let currentWordIndex = 0;
+let totalScore = 0;
+let roundScore = 0;
+let currentWord = {};
+let roundWordsPlayed = []; // Array to store results for the summary
+
+const synth = window.speechSynthesis;
+let voice = null; 
+
+// --- ELEMENT SELECTORS ---
+const views = {
+    instructions: document.getElementById('instructions-view'),
+    word: document.getElementById('current-word-view'),
+    summary: document.getElementById('round-summary-view')
+};
+const els = {
+    roundHeader: document.getElementById('round-header'),
+    translation: document.getElementById('translation'),
+    infinitiveDisplay: document.getElementById('infinitive-verb-display'),
+    simplePastContainer: document.getElementById('simple-past-container'),
+    simplePastDisplay: document.getElementById('simple-past-display'),
+    pastParticipleContainer: document.getElementById('past-participle-container'),
+    pastParticipleDisplay: document.getElementById('past-participle-display'),
+    revealSimplePastButton: document.getElementById('reveal-simple-past-button'),
+    revealPastParticipleButton: document.getElementById('reveal-past-participle-button'),
+    feedbackButtons: document.getElementById('feedback-buttons'),
+    roundScoreDisplay: document.getElementById('round-score-display'),
+    totalScoreDisplay: document.getElementById('total-score-display'),
+    roundSummary: document.getElementById('round-summary'),
+    questionText: document.getElementById('question-text')
+};
+
+
+// Utility function for dynamic Text-to-Speech
+function speakText(text) {
+    if (synth.speaking) {
+        synth.cancel();
+    }
+    const utterThis = new SpeechSynthesisUtterance(text);
+    
+    // Attempt to select an American English voice (or default)
+    if (!voice) {
+        const voices = synth.getVoices();
+        voice = voices.find(v => v.lang.startsWith('en-US')) || voices[0];
+    }
+    if (voice) {
+        utterThis.voice = voice;
+    }
+    utterThis.rate = 0.8; // Slightly slower speech for learning
+    synth.speak(utterThis);
+}
+
+// Function to start the game (called by the initial button)
+function startGame() {
+    currentRoundIndex = 0;
+    currentWordIndex = 0;
+    totalScore = 0;
+    roundScore = 0;
+    roundWordsPlayed = [];
+    els.totalScoreDisplay.textContent = totalScore;
+    loadNextWord();
+}
+
+// Function to reset the view for a new word
+function resetWordView() {
+    els.infinitiveDisplay.classList.remove('hidden');
+    els.revealSimplePastButton.classList.remove('hidden');
+    
+    // Hide all answer elements
+    els.simplePastContainer.classList.add('hidden');
+    els.pastParticipleContainer.classList.add('hidden');
+    els.revealPastParticipleButton.classList.add('hidden');
+    els.feedbackButtons.classList.add('hidden');
+    
+    // Reset display text
+    els.simplePastDisplay.textContent = '...'; 
+    els.pastParticipleDisplay.textContent = '...';
+    
+    els.questionText.innerHTML = `Click the verb to hear it. **What is its Simple Past form?**`;
+}
+
+// Function to load the next word
+function loadNextWord() {
+    if (currentRoundIndex >= GAME_DATA.length) {
+        // Handle Game Over (Final Score Screen)
+        views.word.classList.add('hidden');
+        views.summary.classList.add('hidden');
+        
+        // --- START OF REWARD GRAPHIC UPDATE ---
+        document.getElementById('instructions-view').innerHTML = `
+            <h2 style="color: #e91e63;">Irregular Verb Master! 👑</h2>
+            <div style="font-size: 80px; margin: 20px 0;">
+                <span role="img" aria-label="Trophy">🏆</span>
+            </div>
+            <p style="font-size: 1.5em; font-weight: bold; color: #388e3c;">Congratulations! You have completed all ${GAME_DATA.length} rounds and mastered 100 irregular verbs!</p>
+            <div class="score-box" style="font-size: 2em; margin-top: 30px; padding: 15px; border: 3px solid #e91e63; border-radius: 10px;">
+                Final Score: <span id="final-score-display">${totalScore.toFixed(1)}</span> 🥇
+            </div>
+            <p style="margin-top: 25px; color: #555;">Refresh the page to play again or challenge yourself to reach a perfect 100 points!</p>
+        `;
+        // --- END OF REWARD GRAPHIC UPDATE ---
+        
+        views.instructions.classList.remove('hidden');
+        return; 
+    }
+
+    const currentRound = GAME_DATA[currentRoundIndex];
+    if (currentWordIndex >= currentRound.words.length) {
+        showRoundSummary();
+        return;
+    }
+
+    currentWord = currentRound.words[currentWordIndex];
+
+    resetWordView();
+
+    els.roundHeader.textContent = `Round ${currentRound.round_number}: Word ${currentWordIndex + 1} / ${currentRound.words.length}`;
+    els.translation.textContent = currentWord.japanese_def;
+    els.infinitiveDisplay.textContent = currentWord.infinitive;
+    
+    views.instructions.classList.add('hidden');
+    views.word.classList.remove('hidden');
+    views.summary.classList.add('hidden');
+}
+
+// Function called by the "Simple Past" button
+function revealSimplePast() {
+    els.revealSimplePastButton.classList.add('hidden');
+    els.simplePastContainer.classList.remove('hidden');
+    els.simplePastDisplay.textContent = currentWord.simple_past;
+    
+    speakText(currentWord.simple_past);
+
+    // Update prompt and show next button
+    els.simplePastContainer.querySelector('p').innerHTML = `**Next: What is the Past Participle form?**`;
+    els.revealPastParticipleButton.classList.remove('hidden');
+}
+
+// Function called by the "Past Participle" button
+function revealPastParticiple() {
+    els.revealPastParticipleButton.classList.add('hidden');
+    els.pastParticipleContainer.classList.remove('hidden');
+    els.pastParticipleDisplay.textContent = currentWord.past_participle;
+
+    speakText(currentWord.past_participle);
+
+    // Show the feedback buttons
+    els.feedbackButtons.classList.remove('hidden');
+    els.questionText.innerHTML = `Did you know both forms? Select one to proceed.`;
+}
+
+// Function called by Yes/No/Not Sure buttons
+function submitFeedback(score) {
+    roundScore += score;
+    totalScore += score;
+
+    // Store the result for the summary screen
+    roundWordsPlayed.push({
+        infinitive: currentWord.infinitive,
+        simple_past: currentWord.simple_past,
+        past_participle: currentWord.past_participle,
+        japanese_def: currentWord.japanese_def,
+        sample_sentence: currentWord.sample_sentence,
+        score: score
+    });
+
+    // Update score displays
+    els.roundScoreDisplay.textContent = roundScore.toFixed(1);
+    els.totalScoreDisplay.textContent = totalScore.toFixed(1);
+
+    // Move to the next word
+    currentWordIndex++;
+    loadNextWord();
+}
+
+// Function to display the end-of-round summary
+function showRoundSummary() {
+    views.word.classList.add('hidden');
+    views.summary.classList.remove('hidden');
+    
+    document.getElementById('summary-round-number').textContent = GAME_DATA[currentRoundIndex].round_number;
+    els.roundScoreDisplay.textContent = roundScore.toFixed(1);
+
+    // Generate the list of words for the summary
+    let summaryHTML = '';
+    roundWordsPlayed.forEach(word => {
+        const check = word.score > 0 ? '✅' : '❌';
+        summaryHTML += `
+            <div class="summary-item" style="border-bottom: 1px dotted #e91e63; padding-bottom: 5px;">
+                <strong>${check} ${word.infinitive}</strong>: ${word.simple_past}, ${word.past_participle}
+                <br><span style="color: #6a1b9a; font-size: 0.9em;">(${word.japanese_def})</span>
+                <br><em style="font-size: 0.9em;">Sentence: ${word.sample_sentence}</em>
+            </div>
+        `;
+    });
+    els.roundSummary.innerHTML = summaryHTML;
+}
+
+// Function to start the next round
+function startNextRound() {
+    currentRoundIndex++;
+    currentWordIndex = 0;
+    roundScore = 0;
+    roundWordsPlayed = []; // Reset summary data
+    loadNextWord();
+}
+
+// Initialize on page load to ensure voice is ready (important for TTS)
+window.onload = function() {
+    if (synth.getVoices().length === 0) {
+        synth.onvoiceschanged = function() {
+            voice = synth.getVoices().find(v => v.lang.startsWith('en-US')) || synth.getVoices()[0];
+        };
+    } else {
+        voice = synth.getVoices().find(v => v.lang.startsWith('en-US')) || synth.getVoices()[0];
+    }
+};
+
+// =======================================================================
+// PART 3: ENTRY POINTS (Functions called by HTML)
+// These functions already exist in the HTML structure: startGame, revealSimplePast, revealPastParticiple, submitFeedback, startNextRound
+// =======================================================================
+</script>
+</body>
+</html>
