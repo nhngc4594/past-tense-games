@@ -4,171 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irregular Verb Master Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #fce4ec; /* Sea Foam Pink Background */
-            margin: 0;
-            text-align: center;
-        }
-        #game-container {
-            background-color: #fce4ec; /* Match body background */
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 650px; /* Slightly wider for new layout */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        /* Style for the INFINITIVE verb */
-        #infinitive-verb-display { 
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #e91e63; /* Pink for Base Form */
-            cursor: pointer;
-            padding: 10px 20px;
-            border: 2px solid #e91e63; 
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 10px;
-            user-select: none;
-        }
-        /* Style for the Past Tense forms */
-        .past-tense-reveal {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #4caf50; /* Sea Foam Green for answers */
-            cursor: pointer;
-            padding: 5px 10px;
-            display: inline-block;
-            margin-top: 15px;
-            border-bottom: 3px dashed #4caf50;
-            user-select: none;
-        }
-        #translation {
-            font-size: 1.2em;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        #question-text {
-            font-size: 1.1em;
-            color: #777;
-            margin-bottom: 25px;
-        }
-        
-        .button-group button,
-        #reveal-simple-past-button,
-        #reveal-past-participle-button,
-        #start-game-button,
-        #round-summary-view button {
-            background-color: #4caf50; /* Sea Foam Green Button Color */
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            margin: 5px;
-            border-radius: 5px; 
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .button-group button:hover,
-        #reveal-simple-past-button:hover,
-        #reveal-past-participle-button:hover,
-        #start-game-button:hover,
-        #round-summary-view button:hover {
-            background-color: #388e3c;
-        }
-        /* Make specific buttons larger */
-        #start-game-button {
-            padding: 15px 40px !important;
-            font-size: 1.2em !important;
-            font-weight: bold;
-            min-width: 250px;
-        }
-        #reveal-simple-past-button, #reveal-past-participle-button {
-            padding: 10px 30px;
-            font-size: 1.1em;
-            min-width: 220px;
-            margin-top: 15px;
-        }
-        
-        .score-box {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #333;
-        }
-        #round-summary {
-            margin-top: 20px;
-            text-align: left;
-            padding: 15px;
-            background-color: #f8bbd0; 
-            border-radius: 8px;
-        }
-        .summary-item {
-            margin-bottom: 10px;
-            font-size: 0.95em;
-        }
-        .hidden {
-            display: none;
-        }
-        /* Style for Instructions screen */
-        #instructions-view {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #instructions-view ul {
-            list-style: none;
-            padding-left: 0;
-            max-width: 500px; 
-            margin: 0 auto 20px auto; 
-            text-align: left;
-        }
-        #instructions-view li {
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        .instruction-section {
-            margin-bottom: 25px; 
-            text-align: center;
-        }
-        .instruction-title {
-            font-weight: bold;
-            color: #e91e63;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-            text-align: center;
-        }
-    </style>
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #e3f2fd; /* Soft Blue Background */
+        margin: 0;
+        text-align: center;
+    }
+    #game-container {
+        background-color: #e3f2fd;
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+    }
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .verb-display {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #ffc0cb; /* Sakura Pink */
+        cursor: pointer;
+        padding: 10px 20px;
+        border: 2px solid #ffc0cb;
+        border-radius: 8px;
+        display: inline-block;
+        margin-bottom: 10px;
+        user-select: none;
+    }
+    .verb-display:active {
+        transform: scale(0.98);
+    }
+    #translation {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    #question-text {
+        font-size: 1.1em;
+        color: #777;
+        margin-bottom: 25px;
+    }
+    .past-tense-reveal {
+        font-size: 2em;
+        font-weight: bold;
+        color: #ffc0cb;
+        cursor: pointer;
+        padding: 5px 10px;
+        display: inline-block;
+        margin-top: 15px;
+        border-bottom: 3px dashed #ffc0cb;
+        user-select: none;
+    }
+    .past-tense-reveal:active {
+        opacity: 0.8;
+    }
+    .button-group button,
+    #reveal-button,
+    #start-game-button,
+    #round-summary-view button {
+        background-color: #ffc0cb; /* Sakura Pink Button Color */
+        color: #333; /* Dark text for contrast */
+        border: none;
+        padding: 12px 25px;
+        margin: 5px;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .button-group button:hover,
+    #reveal-button:hover,
+    #start-game-button:hover,
+    #round-summary-view button:hover {
+        background-color: #f7a9b8;
+    }
+    /* Make specific buttons larger */
+    #reveal-button, #start-game-button {
+        padding: 15px 40px !important;
+        font-size: 1.2em !important;
+        font-weight: bold;
+        min-width: 250px;
+    }
+    .score-box {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #333;
+    }
+    #round-summary {
+        margin-top: 20px;
+        text-align: left;
+        padding: 15px;
+        background-color: #fff; /* White background for summary box */
+        border-radius: 8px;
+    }
+    .summary-item {
+        margin-bottom: 10px;
+        font-size: 0.95em;
+    }
+    .hidden {
+        display: none;
+    }
+    /* Style for Instructions screen */
+    #instructions-view {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #instructions-view ul {
+        list-style: none;
+        padding-left: 0;
+        max-width: 450px;
+        margin: 0 auto 20px auto;
+        text-align: left;
+    }
+    #instructions-view li {
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    #instructions-view h3 {
+        color: #ffc0cb; /* Sakura Pink */
+    }
+    .instruction-section {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    .instruction-title {
+        font-weight: bold;
+        color: #e91e63;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        text-align: center;
+    }
+</style>
 </head>
 <body>
 
-<div id="game-container">
-    <div id="instructions-view">
-        <h2 style="color: #e91e63;">Irregular Verb Master Game</h2>
-        
-        <div class="instruction-section">
-            <div class="instruction-title">English Instructions:</div>
-            <p>This game tests your knowledge of **three forms** of irregular verbs: Infinitive, Simple Past, and Past Participle.</p>
-            <p style="font-weight: bold;">10 rounds of 10 words each.</p>
-            <ul>
-                <li>Step 1: Click the verb (**Infinitive**) to hear it.</li>
-                <li>Step 2: Think of the **Simple Past** form.</li>
-                <li>Step 3: Click "Simple Past" to reveal and listen.</li>
-                <li>Step 4: Think of the **Past Participle** form.</li>
-                <li>Step 5: Click "Past Participle" to reveal and listen.</li>
-                <li>Step 6: Answer Yes, No, or Not Sure for the *final form* to score points.</li>
-                <li>End of Round: See your score and sample sentences for all 10 words.</li>
-            </ul>
-        </div>
+<div id="instructions-view">
+    <h2 style="color: #e91e63;">不規則動詞マスターゲーム</h2>
+    
+    <div class="instruction-section">
+        <div class="instruction-title">日本語での遊び方:</div>
+        <p>このゲームは、不規則動詞の過去形と過去分詞形をテストします。</p>
+        <p style="font-weight: bold;">10ラウンドで100単語をマスターします。</p>
+        <ul>
+            <li>ステップ1: 単語が自動的に再生されます。</li>
+            <li>ステップ2: 過去形と過去分詞形を考えます。</li>
+            <li>ステップ3: 「Simple Past」と「Past Participle」をクリックします。</li>
+            <li>ステップ4: 「Yes, No, Not Sure」で回答し、スコアを獲得します。</li>
+            <li>ラウンド終了: スコアと10単語全ての例文を確認します。</li>
+        </ul>
+    </div>
+    
+    <button id="start-game-button" onclick="startGame()">ゲームをスタート</button>
+</div>
 
         <div class="instruction-section">
             <div class="instruction-title">日本語での遊び方:</div>
@@ -478,13 +475,56 @@ function resetWordView() {
     els.questionText.innerHTML = `Click the verb to hear it. **What is its Simple Past form?**`;
 }
 
-// Function to load the next word
+// Function to reset display and load the next word
 function loadNextWord() {
     if (currentRoundIndex >= GAME_DATA.length) {
-        // Handle Game Over (Final Score Screen)
+        // Handle Game Over (Final Score Screen) - KEEPING THE REWARD GRAPHIC
         views.word.classList.add('hidden');
         views.summary.classList.add('hidden');
         
+        document.getElementById('instructions-view').innerHTML = `
+            <h2 style="color: #ffc0cb;">不規則動詞マスター！ 👑</h2>
+            <div style="font-size: 80px; margin: 20px 0;">
+                <span role="img" aria-label="Trophy">🏆</span>
+            </div>
+            <p style="font-size: 1.5em; font-weight: bold; color: #e91e63;">おめでとうございます！全${GAME_DATA.length}ラウンドをクリアしました！</p>
+            <div class="score-box" style="font-size: 2em; margin-top: 30px; padding: 15px; border: 3px solid #ffc0cb; border-radius: 10px;">
+                最終スコア: <span id="final-score-display">${totalScore.toFixed(1)}</span> 🥇
+            </div>
+            <p style="margin-top: 25px; color: #555;">メインメニューに戻り、別のゲームに挑戦しましょう。</p>
+            <a href="index.html" style="text-decoration: none;">
+                <button style="margin-top: 20px; background-color: #1e88e5; color: white;">メインメニューに戻る</button>
+            </a>
+        `;
+        
+        views.instructions.classList.remove('hidden');
+        document.getElementById('total-score-display').textContent = totalScore.toFixed(1);
+        return; 
+    }
+
+    const currentRound = GAME_DATA[currentRoundIndex];
+    if (currentWordIndex >= currentRound.words.length) {
+        showRoundSummary();
+        return;
+    }
+
+    currentWord = currentRound.words[currentWordIndex];
+
+    resetWordView();
+
+    // --- NEW JAPANESE TEXT AND AUTO-AUDIO ---
+    els.roundHeader.textContent = `ラウンド ${currentRound.round_number}: 単語 ${currentWordIndex + 1} / ${currentRound.words.length}`;
+    els.translation.textContent = currentWord.japanese_def;
+    els.infinitiveDisplay.textContent = currentWord.infinitive;
+    els.questionText.textContent = '現在形が自動的に再生されました。「過去形」を考えてください。';
+
+    // *** AUTOPLAY AUDIO HERE ***
+    speakText(currentWord.infinitive); 
+    
+    views.instructions.classList.add('hidden');
+    views.word.classList.remove('hidden');
+    views.summary.classList.add('hidden');
+}
         // --- START OF REWARD GRAPHIC UPDATE ---
         document.getElementById('instructions-view').innerHTML = `
             <h2 style="color: #e91e63;">Irregular Verb Master! 👑</h2>
