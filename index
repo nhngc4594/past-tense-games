@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verb Master Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fce4ec; /* Sea Foam Pink Background */
+            margin: 0;
+            text-align: center;
+        }
+        #hub-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .game-link-button {
+            display: block;
+            margin: 20px auto;
+            text-decoration: none;
+        }
+        .game-link-button button {
+            width: 100%;
+            padding: 18px 30px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            color: white;
+            box-shadow: 0 4px #444; /* Button shadow */
+        }
+        .irregular-button button {
+            background-color: #e91e63; /* Pink */
+        }
+        .irregular-button button:hover {
+            background-color: #c2185b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px #333;
+        }
+        .regular-button button {
+            background-color: #4caf50; /* Green */
+        }
+        .regular-button button:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px #333;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div id="hub-container">
+    <h1>The Verb Master Challenge!</h1>
+    <p>Choose your skill level to begin your past tense training:</p>
+
+    <a href="irregular_game.html" class="game-link-button irregular-button">
+        <button>
+            🧠 Irregular Verbs (Advanced)
+        </button>
+    </a>
+
+    <a href="regular_game.html" class="game-link-button regular-button">
+        <button>
+            ✏️ Regular Verbs (Beginner)
+        </button>
+    </a>
+    
+    <p style="margin-top: 30px; font-size: 0.9em; color: #888;">Ensure all three files (`index.html`, `regular_game.html`, and `irregular_game.html`) are in the same folder.</p>
+</div>
+
+</body>
+</html>
