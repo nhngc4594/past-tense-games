@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verb Master Hub</title>
     <style>
+        /* New soft blue background */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -12,7 +13,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #fce4ec; /* Sea Foam Pink Background */
+            background-color: #e3f2fd; /* Soft Blue Background */
             margin: 0;
             text-align: center;
         }
@@ -25,7 +26,7 @@
             width: 90%;
         }
         h1 {
-            color: #e91e63;
+            color: #1e88e5; /* Darker blue header */
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -51,45 +52,46 @@
             color: white;
             box-shadow: 0 4px #444; /* Button shadow */
         }
-        .irregular-button button {
-            background-color: #e91e63; /* Pink */
-        }
-        .irregular-button button:hover {
-            background-color: #c2185b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px #333;
-        }
+        /* Regular Verb Button (Green) */
         .regular-button button {
-            background-color: #4caf50; /* Green */
+            background-color: #00a651; /* Contrasting Green */
         }
         .regular-button button:hover {
-            background-color: #388e3c;
+            background-color: #007037;
             transform: translateY(-2px);
             box-shadow: 0 6px #333;
         }
-        
+        /* Irregular Verb Button (Sakura Pink) */
+        .irregular-button button {
+            background-color: #ffc0cb; /* Sakura Pink */
+            color: #333; /* Darker text for contrast */
+        }
+        .irregular-button button:hover {
+            background-color: #f7a9b8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px #333;
+        }
     </style>
 </head>
 <body>
 
 <div id="hub-container">
-    <h1>The Verb Master Challenge!</h1>
-    <p>Choose your skill level to begin your past tense training:</p>
-
-    <a href="irregular_game.html" class="game-link-button irregular-button">
-        <button>
-            🧠 Irregular Verbs (Advanced)
-        </button>
-    </a>
+    <h1>動詞マスターチャレンジ！</h1>
+    <p>どのレベルで学習しますか？</p>
 
     <a href="regular_game.html" class="game-link-button regular-button">
         <button>
             ✏️ Regular Verbs (Beginner)
         </button>
     </a>
+
+    <a href="irregular_game.html" class="game-link-button irregular-button">
+        <button>
+            🧠 Irregular Verbs (Advanced)
+        </button>
+    </a>
     
-    <p style="margin-top: 30px; font-size: 0.9em; color: #888;">Ensure all three files (`index.html`, `regular_game.html`, and `irregular_game.html`) are in the same folder.</p>
-</div>
+    </div>
 
 </body>
 </html>
